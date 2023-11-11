@@ -6,10 +6,11 @@ import { useState, useCallback } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import AuthSocialButton from './AuthSocialButton'
 import { BsGithub, BsGoogle } from 'react-icons/bs'
+
 type Variant = 'LOGIN' | 'REGISTER'
 
 const AuthForm = () => {
-  const [variant, setVariant] = useState('REGISTER')
+  const [variant, setVariant] = useState<Variant>('REGISTER')
   const [isLoading, setIsLoading] = useState(false)
 
   // function：切换登录状态
@@ -32,6 +33,8 @@ const AuthForm = () => {
       password: '',
     },
   })
+
+  // function: 表单提交逻辑
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true)
 
@@ -43,6 +46,7 @@ const AuthForm = () => {
     }
   }
 
+  // function: 社交账号登录
   const socialAction = (actions: string) => {
     setIsLoading(true)
     // NextAuth Social Sign In
@@ -51,7 +55,7 @@ const AuthForm = () => {
   return (
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-        {/* 登录表单 */}
+        {/* Auth表单 */}
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant === 'REGISTER' && (
             <Input
@@ -84,16 +88,16 @@ const AuthForm = () => {
         </form>
         {/* 表单下面 */}
         <div className="mt-6">
+          {/* 分割线 */}
           <div className="relative">
-            {/* 分割线 */}
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300" />
             </div>
-            {/*  */}
             <div className="relative flex justify-center text-sm">
               <span className="bg-white px-2 ">or continue with</span>
             </div>
           </div>
+          {/* 社交登录按钮 */}
           <div className="mt-6 flex gap-2">
             <AuthSocialButton
               icon={BsGithub}
@@ -105,6 +109,7 @@ const AuthForm = () => {
             />
           </div>
         </div>
+        {/* 切换到另一个表单区(注册<->登录) */}
         <div
           className="
             flex

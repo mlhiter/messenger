@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
           justify-center
           rounded-md
           px-3
-          py-2 
+          py-2
           text-sm
           font-semibold
           focus-visible:outline

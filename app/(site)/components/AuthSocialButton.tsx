@@ -1,5 +1,4 @@
 import { IconType } from 'react-icons'
-import AuthForm from './AuthForm'
 
 interface AuthSocialButtonProps {
   icon: IconType
@@ -18,7 +17,7 @@ const AuthSocialButton: React.FC<AuthSocialButtonProps> = ({
         inline-flex
         w-full
         justify-center
-        rounded-md 
+        rounded-md
         bg-white
         px-4
         py-2
