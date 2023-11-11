@@ -17,3 +17,4 @@ openssl rand -base64 32
 将生成的密钥填入env中的NEXTAUTH_SECRET中。
 
 当然，你随便输入一个字符串都可以，但是不能啥都不输入。
+

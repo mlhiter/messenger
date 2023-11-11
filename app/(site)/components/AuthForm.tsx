@@ -67,9 +67,19 @@ const AuthForm = () => {
   }
 
   // function: 社交账号登录
-  const socialAction = (actions: string) => {
+  // NOTE: Google由于没有google cloud platform账号，因为需要visa卡，故没有设置
+  const socialAction = (action: string) => {
     setIsLoading(true)
-    // NextAuth Social Sign In
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error('Invalid Credentials')
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success('Logged in!')
+        }
+      })
+      .finally(() => setIsLoading(false))
   }
 
   return (
