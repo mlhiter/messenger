@@ -1,7 +1,7 @@
 {
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "cSpell.words": [
-    "cloundinary",
+    "cloudinary",
     "googleusercontent",
     "NEXTAUTH",
     "prismadb",
