@@ -1,4 +1,10 @@
 {
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "cSpell.words": ["NEXTAUTH", "prismadb"]
+  "cSpell.words": [
+    "cloundinary",
+    "googleusercontent",
+    "NEXTAUTH",
+    "prismadb",
+    "superjson"
+  ]
 }

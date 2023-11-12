@@ -18,3 +18,8 @@ openssl rand -base64 32
 
 当然，你随便输入一个字符串都可以，但是不能啥都不输入。
 
+### 2，如图
+
+![image-20231112103044095](https://raw.githubusercontent.com/mlhiter/typora-images/master/202311121031557.png)
+
+小问题，把DesktopItem写好就没事了

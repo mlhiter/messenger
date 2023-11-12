@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "xabikos.javascriptsnippets",
+    "pkief.material-icon-theme",
+    "christian-kohler.path-intellisense",
+    "prisma.prisma",
+    "ofhumanbondage.react-proptypes-intellisense",
+    "bradlc.vscode-tailwindcss",
+    "gruntfuggly.todo-tree",
+    "pmneo.tsimporter"
+  ]
+}
