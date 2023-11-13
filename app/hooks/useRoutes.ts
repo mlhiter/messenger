@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { usePathname } from 'next/navigation'
-import { HiChat, HiUser } from 'react-icons/hi'
+import { HiChat } from 'react-icons/hi'
 import { HiArrowLeftOnRectangle, HiUsers } from 'react-icons/hi2'
 import { signOut } from 'next-auth/react'
 
@@ -27,7 +27,7 @@ const useRoutes = () => {
       {
         label: 'Logout',
         href: '#',
-        onClick: () => signOut(),
+        onClick: () => signOut(), //BUG:退出登录不跳转登录页面
         icon: HiArrowLeftOnRectangle,
       },
     ],

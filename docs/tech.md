@@ -36,7 +36,7 @@
 
 CSS原子化框架，通过类名的方式快速上样式，CSS框架领域的no.1。
 
-项目中还用到的附属包：[@tailwindcss/forms examples (tailwindcss](https://tailwindcss-forms.vercel.app/)
+项目中还用到的附属包：[@tailwindcss/forms](https://tailwindcss-forms.vercel.app/)
 
 文档地址：[Tailwind CSS](https://tailwindcss.com/)
 
@@ -176,3 +176,39 @@ export default function Page() {
 react使用的一组图标库
 
 文档地址：[React Icons](https://react-icons.github.io/react-icons)
+
+### 七. Prisma
+
+ORM（Object/Relational Mapping），用面向对象的方式操作数据库（可以是关系型数据库或者非关系型数据库）
+
+相关包：@prisma/client（ORM客户端）、prisma（本体，用来数据库对接和建模）
+
+文档地址：[Prisma](https://www.prisma.io/)
+
+### 八. next-auth
+
+Next框架下工具包，用来权限认证
+
+附属包：@next-auth/prisma-adapterr（prisma适配器）
+
+文档地址：[NextAuth.js](https://next-auth.js.org/)
+
+### 九. axios
+
+Promise式的请求api包
+
+文档地址：[Axios](https://axios-http.com/)
+
+### 十. bcrypt
+
+哈希密码包
+
+文档地址：[bcrypt](https://www.npmjs.com/package/bcrypt)
+
+### 十一. date-fns
+
+时间工具包
+
+文档地址：[date-fns](https://date-fns.org/)
+
+### 十一. next-cloudinary
