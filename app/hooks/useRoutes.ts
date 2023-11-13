@@ -27,7 +27,7 @@ const useRoutes = () => {
       {
         label: 'Logout',
         href: '#',
-        onClick: () => signOut(), //BUG:退出登录不跳转登录页面
+        onClick: () => signOut(),
         icon: HiArrowLeftOnRectangle,
       },
     ],
