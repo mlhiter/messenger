@@ -1,7 +1,7 @@
 'use client'
 
 import Button from '@/app/components/Button'
-import Model from '@/app/components/Model'
+import Modal from '@/app/components/Modal'
 import useConversation from '@/app/hooks/useConversation'
 import { Dialog } from '@headlessui/react'
 import axios from 'axios'
@@ -9,11 +9,11 @@ import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import toast from 'react-hot-toast'
 import { FiAlertTriangle } from 'react-icons/fi'
-interface ConfirmModelProps {
+interface ConfirmModalProps {
   isOpen?: boolean
   onClose: () => void
 }
-const ConfirmModel: React.FC<ConfirmModelProps> = ({ isOpen, onClose }) => {
+const ConfirmModal: React.FC<ConfirmModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter()
   const { conversationId } = useConversation()
   const [isLoading, setIsLoading] = useState(false)
@@ -32,7 +32,7 @@ const ConfirmModel: React.FC<ConfirmModelProps> = ({ isOpen, onClose }) => {
       .finally(() => setIsLoading(false))
   }, [conversationId, router, onClose])
   return (
-    <Model isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <div className="sm:flex sm:items-start">
         <div className="mx-auto flex h-12 w-12 flex-shrink-0 justify-center items-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
           <FiAlertTriangle className="h-6 w-6 text-red-600" />
@@ -59,8 +59,8 @@ const ConfirmModel: React.FC<ConfirmModelProps> = ({ isOpen, onClose }) => {
           Cancel
         </Button>
       </div>
-    </Model>
+    </Modal>
   )
 }
 
-export default ConfirmModel
+export default ConfirmModal

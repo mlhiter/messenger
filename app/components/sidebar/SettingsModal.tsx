@@ -6,18 +6,18 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import Model from '../Model'
+import Modal from '../Modal'
 import Input from '../inputs/Input'
 import Image from 'next/image'
 import { CldUploadButton } from 'next-cloudinary'
 import Button from '../Button'
 
-interface SettingsModelProps {
+interface SettingsModalProps {
   isOpen?: boolean
   onClose: () => void
   currentUser: User
 }
-const SettingsModel: React.FC<SettingsModelProps> = ({
+const SettingsModal: React.FC<SettingsModalProps> = ({
   isOpen,
   onClose,
   currentUser,
@@ -59,7 +59,7 @@ const SettingsModel: React.FC<SettingsModelProps> = ({
   }
 
   return (
-    <Model isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
@@ -114,8 +114,8 @@ const SettingsModel: React.FC<SettingsModelProps> = ({
           </div>
         </div>
       </form>
-    </Model>
+    </Modal>
   )
 }
 
-export default SettingsModel
+export default SettingsModal

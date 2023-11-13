@@ -4,12 +4,12 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { IoClose } from 'react-icons/io5'
 
-interface ModelProp {
+interface ModalProp {
   isOpen?: boolean
   onClose: () => void
   children: React.ReactNode
 }
-const Model: React.FC<ModelProp> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProp> = ({ isOpen, onClose, children }) => {
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -53,4 +53,4 @@ const Model: React.FC<ModelProp> = ({ isOpen, onClose, children }) => {
   )
 }
 
-export default Model
+export default Modal
