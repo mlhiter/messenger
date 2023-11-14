@@ -44,7 +44,6 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   }, [data, isActive])
   return (
     <>
-      {/* BUG:TS BUG */}
       <ConfirmModal
         isOpen={confirmOpen}
         onClose={() => {
