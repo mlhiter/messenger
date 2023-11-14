@@ -22,7 +22,7 @@ openssl rand -base64 32
 
 ![image-20231112103044095](https://raw.githubusercontent.com/mlhiter/typora-images/master/202311121031557.png)
 
-小问题，把 DesktopItem 写好就没事了
+小问题，把 DesktopItem组件 写好就没事了
 
 ### 3，Failed to download `Inter` from Google Fonts. Using fallback font instead.
 
@@ -41,3 +41,19 @@ openssl rand -base64 32
 ### 5，无法同时登陆两个账户，一直同步登录状态
 
 一个使用隐私模式，另一个正常即可
+
+### 6，build 的时候遇到问题
+
+**问题：**Type error: Route "app/api/auth/[...nextauth]/route.ts" does not match the required types of a Next.js Route. 
+
+发生在/app/api/auth/[…nextauth]/route.ts中
+
+解决方案：[My Next Js app isn't building and returing a type error, how do I fix? - Stack Overflow](https://stackoverflow.com/questions/76298505/my-next-js-app-isnt-building-and-returing-a-type-error-how-do-i-fix)
+
+**原因：**
+
+在NextJS中使用route.ts文件只能导出名为GET、POST、PATCH等的http对象，我尝试导出authOptions，所以构建失败了
+
+**解决方法：**将authOptions移到另一个文件中，然后导入到这个文件里即可
+
+我是配置了快捷键，alt+enter可以快速操作，选项里有move to new file，非常轻松，1s搞定，这种方式还不需要你改其他导入的地方，很简练
