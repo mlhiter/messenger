@@ -7,6 +7,7 @@ interface IParams {
   conversationId?: string
 }
 
+// api:更新消息，传入conversationId
 export async function POST(request: Request, { params }: { params: IParams }) {
   try {
     const currentUser = await getCurrentUser()
@@ -16,7 +17,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    // 找到已存在的conversation
+    // 先找到已存在的conversation（必须是已存在，不然更新啥消息）
     const conversation = await prisma.conversation.findUnique({
       where: {
         id: conversationId,
@@ -59,6 +60,8 @@ export async function POST(request: Request, { params }: { params: IParams }) {
         },
       },
     })
+
+    // 发布事件到当前用户的频道，当前用户可以订阅自己消息的更新
     await pusherServer.trigger(currentUser.email, 'conversation:update', {
       id: conversationId,
       messages: [updatedMessage],
@@ -69,14 +72,14 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       return NextResponse.json(conversation)
     }
 
-    //Update last message seen
+    // 发布事件到聊天区代号的频道，内容是已经更新的聊天区消息，用户订阅该聊天区的消息更新
     await pusherServer.trigger(
       conversationId!,
       'message:update',
       updatedMessage
     )
 
-    return NextResponse.json(updatedMessage)
+    return new NextResponse('Success')
   } catch (error: any) {
     console.log(error, 'ERROR_MESSAGE_SEEN')
     return new NextResponse('Internal Error', { status: 500 })

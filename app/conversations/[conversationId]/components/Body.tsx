@@ -25,16 +25,18 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // BUG:无法实时显示对方信息
   useEffect(() => {
     pusherClient.subscribe(conversationId)
+
     bottomRef?.current?.scrollIntoView()
 
-    const messageHandler = (message: FullMessageType) => {
+    const messagesHandler = (messages: FullMessageType) => {
       axios.post(`/api/conversations/${conversationId}/seen`)
 
+      // 如果新建聊天已经存在则不变，否则加上一个messages(一个聊天空间)
       setMessages((current) => {
-        if (find(current, { id: message.id })) {
+        if (find(current, { id: messages.id })) {
           return current
         }
-        return [...current, message]
+        return [...current, messages]
       })
 
       bottomRef?.current?.scrollIntoView()
@@ -49,12 +51,12 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
         })
       )
     }
-    pusherClient.bind('message:new', messageHandler)
+    pusherClient.bind('messages:new', messagesHandler)
     pusherClient.bind('message:update', updateMessageHandler)
 
     return () => {
       pusherClient.unsubscribe(conversationId)
-      pusherClient.unbind('message:new', messageHandler)
+      pusherClient.unbind('message:new', messagesHandler)
       pusherClient.unbind('message:update', updateMessageHandler)
     }
   }, [conversationId])
