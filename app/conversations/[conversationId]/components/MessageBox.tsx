@@ -49,6 +49,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
       {/* 左侧消息body区 */}
       <div className={body}>
         {/* 发送时间 */}
+        {/* BUG:凌晨时间显示有问题，比如凌晨12：27，但是显示AM 12：27，需要显示00：27 */}
         <div className="flex items-center gap-1">
           <div className="text-sm text-gray-500">{data.sender.name}</div>
           <div className="text-xs text-gray-400">
@@ -84,7 +85,6 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
             <div>{data.body}</div>
           )}
         </div>
-        {/* BUG:seen机制有问题，无法显示 */}
         {/* 当前用户是我+这是最后一个消息+这条消息被人看到 */}
         {isLast && isOwn && seenList.length > 0 && (
           <div className="text-xs font-light text-gray-500">{`Seen by ${seenList}`}</div>

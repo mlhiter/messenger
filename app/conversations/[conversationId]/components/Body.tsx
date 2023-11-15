@@ -22,7 +22,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
     axios.post(`/api/conversations/${conversationId}/seen`)
   }, [conversationId])
 
-  // BUG:无法实时显示对方信息
   useEffect(() => {
     pusherClient.subscribe(conversationId)
 
