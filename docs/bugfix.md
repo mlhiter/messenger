@@ -57,3 +57,15 @@ openssl rand -base64 32
 **解决方法：**将authOptions移到另一个文件中，然后导入到这个文件里即可
 
 我是配置了快捷键，alt+enter可以快速操作，选项里有move to new file，非常轻松，1s搞定，这种方式还不需要你改其他导入的地方，很简练
+
+### 7，超时问题
+
+部署vercel之后，请求pusher时出现超时错误：
+
+An error occurred with your deployment
+
+FUNCTION_INVOCATION_TIMEOUT
+
+原因：经过查询是Vercel的hobby计划只允许无服务器API请求5s，如果超时会报错504。我设置了pusher的cluster地址为ap，即新加披，那么就很容易超时了
+
+解决方式：将pusher地址改为美国
