@@ -32,7 +32,12 @@
 
    5. 网站交互占比越大，越有必要使用 useCallback
 
-2. useEffect
+2. useMemo
+
+   1. 和useCallback比较类似，只是useMemo缓存函数计算结果（如果两次渲染依赖项不变，则不会进行计算，直接返回缓存结果）
+   2. 作用：跳过代价昂贵的重新计算
+
+3. useEffect
 
    1. 允许组件和外部系统同步
 
@@ -61,7 +66,7 @@
 
    5. 注意：useEffect完全在客户端运行；无法选择依赖项，必须将响应式数据全部写上；开发环境下react会在实际运行setup之前额外运行一次setup和cleanup
 
-3. useState
+4. useState
 
    1. 控制响应式变量的getter和setter
 
@@ -76,9 +81,6 @@
       ```
 
    3. 注意：开发环境下会运行两次初始化函数；set函数仅更新下一次渲染的状态变量（在本次渲染中再读取还是旧值）；如果新值和旧值相同则跳过渲染
-
-   
-
 
 
 ### 二. Tailwind CSS
@@ -230,9 +232,41 @@ react使用的一组图标库
 
 ORM（Object/Relational Mapping），用面向对象的方式操作数据库（可以是关系型数据库或者非关系型数据库）
 
-相关包：@prisma/client（ORM客户端）、prisma（本体，用来数据库对接和建模）
+简单地说就是让数据库操作更简单的工具
+
+使用包：@prisma/client（ORM客户端，用来进行数据查询query）、prisma（服务端本体库，用来数据库对接和建模）
 
 文档地址：[Prisma](https://www.prisma.io/)
+
+使用：架构文件（schema,primsa）
+
+```jsx
+generator client{//生成什么客户端
+  provider = 'prisma-client-js'
+}
+datesource db{//prisma链接的数据库
+  provider = "mongodb" //数据库类型
+  env = env("DATABASE_URL") //数据库地址，读取环境变量
+}
+// 名叫User的模型定义->映射为表/集合
+model User {
+  //字段名称 字段类型+可选类型修饰符 属性（可选）
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  conversationIds String[]       @db.ObjectId
+  conversations   Conversation[] @relation(fields: [conversationIds], references: [id])
+}
+......
+```
+
+查询功能自己看文档吧：[Prisma Client](https://www.prisma.io/client)
 
 ### 八. next-auth
 
@@ -254,13 +288,58 @@ Promise式的请求api包
 
 文档地址：[bcrypt](https://www.npmjs.com/package/bcrypt)
 
+使用：
+
+```ts
+//生成hash化的密码
+const hashedPassword = await bcrypt.hash(password, 12)
+//检查密码是否正确
+const isCorrectPassword = await bcrypt.compare(
+credentials.password,user.hashedPassword
+)
+```
+
 ### 十一. date-fns
 
 时间工具包
 
 文档地址：[date-fns](https://date-fns.org/)
 
+使用：
+
+```tsx
+import { format } from 'date-fns'
+
+<div className="text-xs text-gray-400">
+  //p转换为长本地化时间字符串
+{format(new Date(data.createdAt), 'p')}
+</div>
+```
+
 ### 十一. next-cloudinary
+
+云图像存储，提供上传组件
+
+文档地址：[next-cloudinary](https://www.npmjs.com/package/next-cloudinary)
+
+使用：
+
+```tsx
+import { CldUploadButton } from 'next-cloudinary'
+
+const handleUpload = (result: any) => {
+    setValue('image', result?.info?.secure_url, {
+      shouldValidate: true,
+    })
+  }
+
+<CldUploadButton
+  options={{ maxFiles: 1 }}
+  onUpload={handleUpload}
+  uploadPreset="">
+  <Button disabled={isLoading} secondary type="button">Change</Button>
+</CldUploadButton>
+```
 
 ### 十二. Pusher
 
@@ -289,3 +368,155 @@ channel.bind('my-event', function(data) {
 });
 channel.unbind('my-event', ()=>{})
 ```
+
+### 十三. headlessui
+
+包：@headlessui/react
+
+无头UI，只提供组件逻辑，不提供组件样式，自己配置样式（它提供配置接口）。
+
+比较常用而且项目里用到的：Dialog(弹出框)、Transition(过渡样式)
+
+文档地址：[@headlessui/react](https://headlessui.com/react/menu)
+
+使用：
+
+```html
+<Transition.Root show as={Fragment}>
+      <Dialog as="div" className="relative z-50" onClose={() => {}}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0">
+          <div className="fixed inset-0 bg-gray-100 bg-opacity-50 transition-opacity" />
+        </Transition.Child>
+        <div className="fixed inset-0 z-10 overflow-y-auto ">
+          <div className=" flex min-h-full items-center justify-center p-4 text-center">
+            <Dialog.Panel>
+              <ClipLoader size={40} color="#0284c7" />
+            </Dialog.Panel>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+```
+
+### 十四. react-hot-toast
+
+一个组件包，notifications，就是界面弹出提示的包。
+
+文档地址：[react-hot-toast](https://react-hot-toast.com/)
+
+使用：
+
+```jsx
+toast.success('Successfully toasted!')
+```
+
+就酱，直接js里用就得了，其他用法看文档
+
+### 十五. zustand
+
+React的状态管理工具。
+
+文档地址：[Zustand](https://zustand-demo.pmnd.rs/)
+
+使用：
+
+```ts
+import { create } from 'zustand'
+
+const useStore = create((set) => ({
+  bears: 0,
+  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+  removeAllBears: () => set({ bears: 0 }),
+}))
+
+function BearCounter() {
+  const bears = useStore((state) => state.bears)
+  return <h1>{bears} around here...</h1>
+}
+
+function Controls() {
+  const increasePopulation = useStore((state) => state.increasePopulation)
+  return <button onClick={increasePopulation}>one up</button>
+}
+```
+
+### 十六. lodash
+
+JS工具库，封装了一些基本工具
+
+文档地址：[Lodash](https://www.lodashjs.com/)
+
+项目中用到的函数方法：
+
+```ts
+import { find } from 'lodash'
+// 如果新建聊天已经存在则不变，否则加上一个messages(一个聊天空间)
+setMessages((current) => {
+  //找到current对象数组里，含有属性id且id的value为messanges.id的对象
+  if (find(current, { id: messages.id })) {
+    return current
+  }
+    return [...current, messages]
+  })
+```
+
+### 十七. next-superjson-plugin
+
+修复NextJS里return方法里不允许包含非JS值的问题(Map、Date、Set)
+
+文档地址:[next-superjson](https://www.npmjs.com/package/next-superjson-plugin)
+
+使用：
+
+```ts
+//next.config.js
+const nextConfig = {
+  experimental: {
+    swcPlugins: [['next-superjson-plugin', {}]],
+  },
+}
+```
+
+### 十八. react-select
+
+react的select组件
+
+文档地址：[React Select](https://react-select.com/home)
+
+使用：
+
+```tsx
+import React from 'react'
+import Select from 'react-select'
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
+
+const MyComponent = () => (
+  <Select options={options} />
+)
+```
+
+### 十九. react-spinners
+
+加载器效果组件的收集集合
+
+文档地址：[react-spinners](https://www.npmjs.com/package/react-spinners)
+
+在线查阅地址：[React Spinners](https://www.davidhu.io/react-spinners/)
+
+```tsx
+import { ClipLoader } from 'react-spinners'
+<ClipLoader size={40} color="#0284c7" />
+```
+

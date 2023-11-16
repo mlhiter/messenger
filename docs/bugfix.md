@@ -69,3 +69,13 @@ FUNCTION_INVOCATION_TIMEOUT
 原因：经过查询是Vercel的hobby计划只允许无服务器API请求5s，如果超时会报错504。我设置了pusher的cluster地址为ap，即新加披，那么就很容易超时了
 
 解决方式：将pusher地址改为美国
+
+但是其实仍然经常发生？？
+
+### 8，github登录认证失败
+
+报错：OAuthAccountNotLinked
+
+貌似是我用邮箱注册了一个账户，这个邮箱绑定的github就无法用来验证登录。
+
+这是危险的，如果合并的话。

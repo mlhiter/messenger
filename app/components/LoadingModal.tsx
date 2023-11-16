@@ -16,6 +16,7 @@ const LoadingModal = () => {
           leave="ease-in duration-200"
           leaveFrom="opacity-100"
           leaveTo="opacity-0">
+          {/* 一个幕布，遮住内容，因为要做一个loading效果不是嘛 */}
           <div className="fixed inset-0 bg-gray-100 bg-opacity-50 transition-opacity" />
         </Transition.Child>
         <div className="fixed inset-0 z-10 overflow-y-auto ">
