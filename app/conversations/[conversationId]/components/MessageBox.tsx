@@ -49,6 +49,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
       {/* 左侧消息body区 */}
       <div className={body}>
         {/* 发送时间 */}
+        {/* FIXME:没有显示日期 */}
         {/* BUG:凌晨时间显示有问题，比如凌晨12：27，但是显示AM 12：27，需要显示00：27 */}
         <div className="flex items-center gap-1">
           <div className="text-sm text-gray-500">{data.sender.name}</div>
